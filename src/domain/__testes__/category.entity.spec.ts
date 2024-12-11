@@ -5,7 +5,7 @@ describe('Category Unit Tests', () => {
     test('should create a category with default values', () => {
       const data = { name: 'Movie' }
 
-      const category = new Category(data)
+      const category = Category.create(data)
 
       expect(category.category_id).toBeUndefined()
       expect(category.name).toBe('Movie')
@@ -16,7 +16,7 @@ describe('Category Unit Tests', () => {
 
     test('should create a category with all values', () => {
       const created_at = new Date()
-      const category = new Category({
+      const category = Category.create({
         name: 'Movie',
         description: 'Movies category',
         is_active: false,
@@ -31,7 +31,7 @@ describe('Category Unit Tests', () => {
     })
 
     test('should create a category with description value', () => {
-      const category = new Category({
+      const category = Category.create({
         name: 'Movie',
         description: 'Movies category',
       })
@@ -42,5 +42,37 @@ describe('Category Unit Tests', () => {
       expect(category.is_active).toBeTruthy()
       expect(category.created_at).toBeInstanceOf(Date)
     })
+  })
+
+  test('should change name', () => {
+    const category = Category.create({ name: 'Movie' })
+
+    category.changeName('Books')
+
+    expect(category.name).toBe('Books')
+  })
+
+  test('should change description', () => {
+    const category = Category.create({ name: 'Movie' })
+
+    category.changeDescription('Movies and series')
+
+    expect(category.description).toBe('Movies and series')
+  })
+
+  test('should activate category', () => {
+    const category = Category.create({ name: 'Movie', is_active: false })
+
+    category.activate()
+
+    expect(category.is_active).toBeTruthy()
+  })
+
+  test('should deactivate category', () => {
+    const category = Category.create({ name: 'Movie' })
+
+    category.deactivate()
+
+    expect(category.is_active).toBeFalsy()
   })
 })
