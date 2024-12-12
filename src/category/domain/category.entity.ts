@@ -1,4 +1,6 @@
+import ValidatorRules from "../../shared/domain/validators/validator-rules";
 import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
+import { CategoryValidatorFactory } from "./category.validator";
 
 export type CategoryConstructorProps = {
   category_id?: Uuid;
@@ -34,6 +36,7 @@ export class Category {
   }
 
   changeName(name: string): void {
+    ValidatorRules.values(name, "name").required().string().maxLength(255);
     this.name = name;
   }
 
@@ -47,6 +50,11 @@ export class Category {
 
   deactivate(): void {
     this.is_active = false;
+  }
+
+  static validate(entity: Category) {
+    const validator = CategoryValidatorFactory.create();
+    return validator.validate(entity);
   }
 
   toJSON() {
