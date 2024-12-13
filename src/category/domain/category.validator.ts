@@ -22,8 +22,8 @@ export class CategoryRules {
   @IsNotEmpty()
   is_active: boolean;
 
-  constructor({ name, description, created_at }: Category) {
-    Object.assign(this, { name, description, created_at });
+  constructor({ name, description, created_at, is_active }: Category) {
+    Object.assign(this, { name, description, created_at, is_active });
   }
 }
 
